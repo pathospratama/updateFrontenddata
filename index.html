@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Product Management System</h1>
+        
+        <div class="tab-container">
+            <div class="tab active" onclick="switchTab('add')">Tambah Produk</div>
+            <div class="tab" onclick="switchTab('update')">Update Produk</div>
+            <div class="tab" onclick="switchTab('view')">Lihat Produk</div>
+        </div>
+        
+        <!-- Form Tambah Produk -->
+        <div id="addForm" class="tab-content active">
+            <form id="productAddForm">
+                <div class="form-group">
+                    <label for="add_id">ID*:</label>
+                    <input type="number" id="add_id" name="id" required>
+                    <div id="idError" class="error"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="add_number">Number*:</label>
+                    <input type="number" id="add_number" name="number" required>
+                    <div id="numberError" class="error"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="add_name">Nama Produk:</label>
+                    <input type="text" id="add_name" name="name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="add_category">Kategori:</label>
+                    <input type="text" id="add_category" name="category">
+                </div>
+                
+                <div class="form-group">
+                    <label for="add_price">Harga:</label>
+                    <input type="number" id="add_price" name="price">
+                </div>
+                
+                <div class="form-group">
+                    <label for="add_originalPrice">Harga Asli:</label>
+                    <input type="number" id="add_originalPrice" name="originalPrice">
+                </div>
+                
+                <div class="form-group">
+                    <label for="add_image">Gambar Utama:</label>
+                    <input type="text" id="add_image" name="image">
+                </div>
+                
+                <div class="form-group">
+                    <label>Gambar Lainnya:</label>
+                    <div class="array-container" id="addImagesContainer">
+                        <div class="array-field">
+                            <input type="text" name="images[]" placeholder="URL gambar">
+                            <button type="button" class="remove-btn" onclick="this.parentElement.remove()">Hapus</button>
+                        </div>
+                    </div>
+                    <button type="button" class="add-btn" onclick="addImageField('add')">Tambah Gambar</button>
+                </div>
+                
+                <div class="form-group">
+                    <label for="add_link">Link Produk:</label>
+                    <input type="text" id="add_link" name="link">
+                </div>
+                
+                <div class="form-group">
+                    <label for="add_rating">Rating:</label>
+                    <input type="number" step="0.1" id="add_rating" name="rating">
+                </div>
+                
+                <div class="form-group">
+                    <label for="add_reviews">Jumlah Review:</label>
+                    <input type="number" id="add_reviews" name="reviews">
+                </div>
+                
+                <div class="form-group">
+                    <label for="add_ribuan">Ribuan:</label>
+                    <input type="text" id="add_ribuan" name="ribuan">
+                </div>
+                
+                <div class="form-group">
+                    <label for="add_stock">Stok:</label>
+                    <input type="number" id="add_stock" name="stock">
+                </div>
+                
+                <div class="form-group">
+                    <label for="add_description">Deskripsi:</label>
+                    <textarea id="add_description" name="description" rows="3"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="add_specifications">Spesifikasi:</label>
+                    <textarea id="add_specifications" name="specifications" rows="3"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Fitur:</label>
+                    <div class="array-container" id="addFeaturesContainer">
+                        <div class="array-field">
+                            <input type="text" name="features[]" placeholder="Fitur produk">
+                            <button type="button" class="remove-btn" onclick="this.parentElement.remove()">Hapus</button>
+                        </div>
+                    </div>
+                    <button type="button" class="add-btn" onclick="addFeatureField('add')">Tambah Fitur</button>
+                </div>
+                
+                <button type="submit" class="submit-btn">Tambah Produk</button>
+            </form>
+        </div>
+        
+        <!-- Form Update Produk -->
+        <div id="updateForm" class="tab-content">
+            <div class="form-group">
+                <label for="update_id">ID Produk yang akan diupdate*:</label>
+                <input type="number" id="update_id" required>
+                <button type="button" class="find-btn" onclick="loadProduct()">Cari Produk</button>
+                <div id="productNotFound" class="error"></div>
+            </div>
+            
+            <form id="productUpdateForm" style="display:none;">
+                <input type="hidden" id="up_id" name="id">
+                
+                <div class="form-group">
+                    <label for="up_number">Number:</label>
+                    <input type="number" id="up_number" name="number">
+                    <small class="hint">Kosongkan atau isi 0 untuk reset</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="up_name">Nama Produk:</label>
+                    <input type="text" id="up_name" name="name">
+                    <small class="hint">Kosongkan untuk menghapus nilai</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="up_category">Kategori:</label>
+                    <input type="text" id="up_category" name="category">
+                </div>
+                
+                <div class="form-group">
+                    <label for="up_price">Harga:</label>
+                    <input type="number" id="up_price" name="price">
+                </div>
+                
+                <div class="form-group">
+                    <label for="up_originalPrice">Harga Asli:</label>
+                    <input type="number" id="up_originalPrice" name="originalPrice">
+                </div>
+                
+                <div class="form-group">
+                    <label for="up_image">Gambar Utama:</label>
+                    <input type="text" id="up_image" name="image">
+                </div>
+                
+                <div class="form-group">
+                    <label>Gambar Lainnya:</label>
+                    <div class="array-container" id="updateImagesContainer"></div>
+                    <button type="button" class="add-btn" onclick="addImageField('update')">Tambah Gambar</button>
+                    <small class="hint">Kosongkan field untuk menghapus item</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="up_link">Link Produk:</label>
+                    <input type="text" id="up_link" name="link">
+                </div>
+                
+                <div class="form-group">
+                    <label for="up_rating">Rating:</label>
+                    <input type="number" step="0.1" id="up_rating" name="rating">
+                </div>
+                
+                <div class="form-group">
+                    <label for="up_reviews">Jumlah Review:</label>
+                    <input type="number" id="up_reviews" name="reviews">
+                </div>
+                
+                <div class="form-group">
+                    <label for="up_ribuan">Ribuan:</label>
+                    <input type="text" id="up_ribuan" name="ribuan">
+                </div>
+                
+                <div class="form-group">
+                    <label for="up_stock">Stok:</label>
+                    <input type="number" id="up_stock" name="stock">
+                </div>
+                
+                <div class="form-group">
+                    <label for="up_description">Deskripsi:</label>
+                    <textarea id="up_description" name="description" rows="3"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="up_specifications">Spesifikasi:</label>
+                    <textarea id="up_specifications" name="specifications" rows="3"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Fitur:</label>
+                    <div class="array-container" id="updateFeaturesContainer"></div>
+                    <button type="button" class="add-btn" onclick="addFeatureField('update')">Tambah Fitur</button>
+                    <small class="hint">Kosongkan field untuk menghapus item</small>
+                </div>
+                
+                <button type="submit" class="submit-btn">Update Produk</button>
+            </form>
+        </div>
+        
+        <!-- Tab Lihat Produk -->
+        <div id="viewForm" class="tab-content">
+            <div class="product-list-header">
+                <h2>Daftar Produk</h2>
+                <button class="refresh-btn" onclick="loadProductList()">Refresh</button>
+            </div>
+            <div id="productList"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
