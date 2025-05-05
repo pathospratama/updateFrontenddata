@@ -177,7 +177,7 @@ document.getElementById('productAddForm').addEventListener('submit', async funct
         
         // Submit form if validation passes
         const formData = new FormData(this);
-        const addResponse = await fetch('http://localhost:5000/api/products/add', {
+        const addResponse = await fetch('https://homesalle.vercel.app/api/products/add', {
             method: 'POST',
             body: formData
         });
@@ -236,7 +236,7 @@ document.getElementById('productUpdateForm').addEventListener('submit', async fu
             formData.set('rating', '0.0');
         }
         
-        const response = await fetch('http://localhost:5000/api/products/update', {
+        const response = await fetch('https://homesalle.vercel.app/api/products/update', {
             method: 'POST',
             body: formData
         });
