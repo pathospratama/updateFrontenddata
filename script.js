@@ -30,7 +30,7 @@ async function loadProduct() {
     if (!productId) return;
     
     try {
-        const response = await fetch(`https://homesalle.vercel.app/api/products`);
+        const response = await fetch(`https://data-jsone.vercel.app/api/products`);
         const products = await response.json();
         const product = products.find(p => p.id == productId);
         
@@ -162,7 +162,7 @@ document.getElementById('productAddForm').addEventListener('submit', async funct
     
     try {
         // Check for duplicate ID and Number
-        const response = await fetch('https://homesalle.vercel.app/api/products');
+        const response = await fetch('https://data-jsone.vercel.app/api/products');
         const products = await response.json();
         
         if (products.some(p => p.id == id)) {
@@ -177,7 +177,7 @@ document.getElementById('productAddForm').addEventListener('submit', async funct
         
         // Submit form if validation passes
         const formData = new FormData(this);
-        const addResponse = await fetch('https://homesalle.vercel.app/api/products/add', {
+        const addResponse = await fetch('https://data-jsone.vercel.app/api/products/add', {
             method: 'POST',
             body: formData
         });
@@ -236,7 +236,7 @@ document.getElementById('productUpdateForm').addEventListener('submit', async fu
             formData.set('rating', '0.0');
         }
         
-        const response = await fetch('https://homesalle.vercel.app/api/products/update', {
+        const response = await fetch('https://data-jsone.vercel.app/api/products/update', {
             method: 'POST',
             body: formData
         });
